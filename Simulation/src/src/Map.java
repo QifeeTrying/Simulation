@@ -5,19 +5,24 @@ import java.util.List;
 import java.util.Random;
 
 public class Map {
-    public char[][] grid;
+    public ArrayList<ArrayList<Character>> Grid;
     private List<Entity> List;
         
     public Map(int width, int height) {
-        grid = new char[10][10];
+    	Grid = new ArrayList<>();  
         List = new ArrayList<>();
-    }
-
-    public void addEntity(int x, int y, char symbol) {
-        grid[x][y] = symbol;
+        
+        for (int i = 0; i < width; i++) {
+            ArrayList<Character> row = new ArrayList<>();
+            for (int j = 0; j < height; j++) {
+                row.add('.');  // Fill with default values
+            }
+            Grid.add(row);
+        }
+        
     }
     
-    public void addEntities(int count, Class<? extends Entity> type, Random rand, char Symbol) {
+    public boolean addEntities(int count, Class<? extends Entity> type, Random rand, char Symbol) {
         
         for (int i = 0; i < count; i++) {
             int x, y;
@@ -26,14 +31,15 @@ public class Map {
                 y = rand.nextInt(0, 10);
             } while (getSymbolAt(x, y) != '.');
   
-            addEntity(x, y, Symbol);
-            
+            Grid.get(x).set(y, Symbol);
           
         }
+		return false;
     }
 
     
     public char getSymbolAt(int x, int y) {
-        return grid[x][y] != '\0' ? grid[x][y] : '.';
+        return Grid.get(x).get(y) != '\0' ? Grid.get(x).get(y) : '.';
     }
+
 }
