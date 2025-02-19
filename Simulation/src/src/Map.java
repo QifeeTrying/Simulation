@@ -1,25 +1,24 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 public class Map {
-    public ArrayList<ArrayList<Character>> Grid;
+	private HashMap<String, Character> Grid;
     private List<Entity> List;
+    private List<Herbivore> herbivores;
+    private List<Predator> predators;
+    private List<Entity> grass;
         
     public Map(int width, int height) {
-    	Grid = new ArrayList<>();  
+    	this.Grid = new HashMap<>();  
         List = new ArrayList<>();
-        
-        for (int i = 0; i < width; i++) {
-            ArrayList<Character> row = new ArrayList<>();
-            for (int j = 0; j < height; j++) {
-                row.add('.');  // Fill with default values
-            }
-            Grid.add(row);
-        }
-        
+        this.herbivores = new ArrayList<>();
+        this.predators = new ArrayList<>();
+        this.grass = new ArrayList<>();
+
     }
     
     public boolean addEntities(int count, Class<? extends Entity> type, Random rand, char Symbol) {
@@ -31,7 +30,7 @@ public class Map {
                 y = rand.nextInt(0, 10);
             } while (getSymbolAt(x, y) != '.');
   
-            Grid.get(x).set(y, Symbol);
+            Grid.put(x + "," + y, Symbol);
           
         }
 		return false;
@@ -39,7 +38,30 @@ public class Map {
 
     
     public char getSymbolAt(int x, int y) {
-        return Grid.get(x).get(y) != '\0' ? Grid.get(x).get(y) : '.';
+        return Grid.getOrDefault(x + "," + y, '.');
     }
+    
+    public boolean isValid(int x, int y) {
+        return x >= 0 && x < 10 && y >= 0 && y < 10;
+    }
+    
+    public List<Herbivore> getHerbivores() {
+        return herbivores;
+    }
+
+    public List<Predator> getPredators() {
+        return predators;
+    }
+
+    public List<Entity> getGrass() {
+        return grass;
+    }
+    
+    public void removeEntity(int x, int y) {
+        Grid.remove(x + "," + y);
+        grass.removeIf(entity -> entity.getX() == x && entity.getY() == y);
+    }
+
+
 
 }

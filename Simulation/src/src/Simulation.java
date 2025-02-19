@@ -1,17 +1,19 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.List;
 
 public class Simulation {
     private Map map = new Map(10, 10);
     private int turnCounter = 0;
+    Scanner scanner = new Scanner(System.in);
     
-    public List<Action> initActions = new ArrayList<>();  // Список дій для ініціалізації
-    public List<Action> turnActions = new ArrayList<>();  // Список дій на хід
+    public List<Action> initActions = new ArrayList<>();
+    public List<Action> turnActions = new ArrayList<>();
 
     public Simulation() {
-        initActions.add(new InitActions());  // Викликаємо конструктор InitActions без додаткових параметрів
+        initActions.add(new InitActions());
     }
 
     public void nextTurn() {
@@ -26,20 +28,23 @@ public class Simulation {
             action.execute(map);
         }
         
-        // Далі йде цикл ходів
         while (true) {
-            nextTurn();
-            try {
-                Thread.sleep(5000); // Затримка в 5 секунд для зручності
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+            for (Herbivore h : map.getHerbivores()) {
+                h.makeMove(map);
             }
+            for (Predator p : map.getPredators()) {
+                p.makeMove(map);
+            }
+            
+            nextTurn();
+            System.out.println("Press Enter to continue...");
+            scanner.nextLine(); 
         }
     }
 
-    // Статичний метод main для запуску програми
     public static void main(String[] args) {
         Simulation sim = new Simulation();
-        sim.startSimulation();  // Запуск симуляції
+        sim.startSimulation();
     }
 }
