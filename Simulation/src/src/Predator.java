@@ -11,7 +11,6 @@ public class Predator extends Creature {
     @Override
     public void makeMove(Map map) {
 
-        System.out.println("PredaMove");
         int[] targetCoords = new int[2]; // Array to store target's coordinates
         
         boolean canDestroy = TurnActions.moveCreature(this, map.getHerbivores(), map, targetCoords); // Move and get coords

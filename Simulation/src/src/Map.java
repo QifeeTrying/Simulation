@@ -22,18 +22,44 @@ public class Map {
     }
     
     public boolean addEntities(int count, Class<? extends Entity> type, Random rand, char Symbol) {
-        
         for (int i = 0; i < count; i++) {
             int x, y;
             do {
                 x = rand.nextInt(0, 10);
                 y = rand.nextInt(0, 10);
             } while (getSymbolAt(x, y) != '.');
-  
+
             Grid.put(x + "," + y, Symbol);
-          
+            
+            if (type == Herbivore.class) {
+                Herbivore h = new Herbivore(x, y);
+                herbivores.add(h);
+            } else if (type == Predator.class) {
+                Predator p = new Predator(x, y);
+                predators.add(p);
+            } else if (type == Grass.class) {
+                Grass g = new Grass(x, y);
+                grass.add(g);
+            }
         }
-		return false;
+        return true;
+    }
+
+    public boolean addEntity(Class<? extends Entity> type, int PositionX, int PositionY) {
+            int x = PositionX, y = PositionY;
+            if (type == Herbivore.class) {
+            	char Symbol = 'H';
+            	Grid.put(x + "," + y, Symbol);
+                Herbivore h = new Herbivore(x, y);
+                System.out.println(Symbol);
+                herbivores.add(h);
+            } else if (type == Predator.class) {
+            	char Symbol = 'P';
+            	Grid.put(x + "," + y, Symbol);
+                Predator p = new Predator(x, y);
+                predators.add(p);
+            }
+        return true;
     }
 
     
@@ -59,9 +85,9 @@ public class Map {
     
     public void removeEntity(int x, int y) {
         Grid.remove(x + "," + y);
-        grass.removeIf(entity -> entity.getX() == x && entity.getY() == y);
+        herbivores.removeIf(h -> h.getX() == x && h.getY() == y);     
+        predators.removeIf(p -> p.getX() == x && p.getY() == y);
     }
-
 
 
 }

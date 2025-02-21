@@ -8,13 +8,10 @@ public class Herbivore extends Creature {
     @Override
     public void makeMove(Map map) {
 
-        System.out.println("HerbiMove");
-        int[] targetCoords = new int[2]; // Array to store target's coordinates
-        
-        boolean canDestroy = TurnActions.moveCreature(this, map.getGrass(), map, targetCoords); // Move and get coords
-
-        if (canDestroy) { // If adjacent to Grass
-            map.removeEntity(targetCoords[0], targetCoords[1]); // Remove Grass at the stored coordinates
+        int[] targetCoords = new int[2];        
+        boolean canDestroy = TurnActions.moveCreature(this, map.getGrass(), map, targetCoords);
+        if (canDestroy) {
+            map.removeEntity(targetCoords[0], targetCoords[1]);
         }
     }
 

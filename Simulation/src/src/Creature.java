@@ -10,7 +10,10 @@ public abstract class Creature extends Entity {
         this.speed = speed;
     }
 
-    public int getHP() { return hp; }
+    public int getHP() {
+    	return hp;
+    	}
+    
     public void takeDamage(int damage) { 
         hp -= damage; 
 //        if (hp <= 0) die();

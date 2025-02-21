@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class InitActions implements Action {
     private int numHerbivores = 3;
-    private int numPredators = 2;
+    private int numPredators = 1;
     private int numGrass = 8;
     private int numRocks = 3;
     private int numTrees = 3;
