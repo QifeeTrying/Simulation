@@ -4,7 +4,16 @@ public class Renderer {
     public static void render(Map map) {
         for (int y = 0; y < 10; y++) {
             for (int x = 0; x < 10; x++) {
-                System.out.print(map.getSymbolAt(x, y));
+                char symbol = '.';
+
+                for (Entity entity : map.getEntities()) {
+                    if (entity.getX() == x && entity.getY() == y) {  
+                        symbol = map.getSymbolForEntity(entity);
+                        break;
+                    }
+                }
+
+                System.out.print(symbol);
             }
             System.out.println();
         }

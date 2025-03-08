@@ -11,8 +11,6 @@ public class Simulation {
     
     public List<Action> initActions = new ArrayList<>();
     public List<Action> turnActions = new ArrayList<>();
-    List<Herbivore> currentHerbivores;
-    List<Predator> currentPredators;
 
     public Simulation() {
         initActions.add(new InitActions());
@@ -31,15 +29,12 @@ public class Simulation {
         }
         
         while (true) {
-            List<Herbivore> currentHerbivores = new ArrayList<>(map.getHerbivores());
-            List<Predator> currentPredators = new ArrayList<>(map.getPredators());
+            for (Entity entity : map.getEntities()) {
+                if (entity instanceof Creature) {
+                    ((Creature) entity).makeMove(map);
 
-
-            for (Herbivore h : currentHerbivores) {
-                h.makeMove(map);
-            }
-            for (Predator p : currentPredators) {
-                p.makeMove(map);
+ //                   System.out.println("Made move");
+                }
             }
             
             nextTurn();

@@ -1,23 +1,21 @@
 package src;
 
-public class Predator extends Creature {
-    private int attackPower;
+import java.util.List;
 
-    public Predator(int x, int y) {
-        super(x, y, 80, 1); // HP: 80, Speed: 1
-        this.attackPower = 25;
+public class Predator extends Creature {
+
+    public Predator(int x, int y, int ID, int HP) {
+        super(x, y, ID, 20);
     }
 
     @Override
     public void makeMove(Map map) {
+    	makeMove(map, map.getHerbivores());
+    }
 
-        int[] targetCoords = new int[2]; // Array to store target's coordinates
-        
-        boolean canDestroy = TurnActions.moveCreature(this, map.getHerbivores(), map, targetCoords); // Move and get coords
-
-        if (canDestroy) { // If adjacent to Grass
-            map.removeEntity(targetCoords[0], targetCoords[1]); // Remove Grass at the stored coordinates
-        }
+    @Override
+    public String toString() {
+    	return "Predator ID " + ID + ", " + X + ", " + Y;
     }
 
 }

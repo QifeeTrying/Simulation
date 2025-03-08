@@ -1,92 +1,99 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 public class Map {
-	private HashMap<String, Character> Grid;
+	public HashMap<String, Character> Grid;
     private List<Entity> List;
-    private List<Herbivore> herbivores;
-    private List<Predator> predators;
-    private List<Entity> grass;
-        
+    private static int globalID = 1;
+
     public Map(int width, int height) {
     	this.Grid = new HashMap<>();  
         List = new ArrayList<>();
-        this.herbivores = new ArrayList<>();
-        this.predators = new ArrayList<>();
-        this.grass = new ArrayList<>();
-
     }
     
     public boolean addEntities(int count, Class<? extends Entity> type, Random rand, char Symbol) {
         for (int i = 0; i < count; i++) {
             int x, y;
-            do {
-                x = rand.nextInt(0, 10);
-                y = rand.nextInt(0, 10);
-            } while (getSymbolAt(x, y) != '.');
 
-            Grid.put(x + "," + y, Symbol);
-            
-            if (type == Herbivore.class) {
-                Herbivore h = new Herbivore(x, y);
-                herbivores.add(h);
-            } else if (type == Predator.class) {
-                Predator p = new Predator(x, y);
-                predators.add(p);
-            } else if (type == Grass.class) {
-                Grass g = new Grass(x, y);
-                grass.add(g);
+            do {
+                x = rand.nextInt(10);
+                y = rand.nextInt(10);
+            } while (isOccupied(x, y));
+
+            try {
+            	Entity entity = type.getDeclaredConstructor(int.class, int.class, int.class, int.class).newInstance(x, y, globalID++, 20);
+            	List.add(entity);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
             }
         }
         return true;
     }
-
-    public boolean addEntity(Class<? extends Entity> type, int PositionX, int PositionY) {
-            int x = PositionX, y = PositionY;
-            if (type == Herbivore.class) {
-            	char Symbol = 'H';
-            	Grid.put(x + "," + y, Symbol);
-                Herbivore h = new Herbivore(x, y);
-                System.out.println(Symbol);
-                herbivores.add(h);
-            } else if (type == Predator.class) {
-            	char Symbol = 'P';
-            	Grid.put(x + "," + y, Symbol);
-                Predator p = new Predator(x, y);
-                predators.add(p);
+ 
+    private boolean isOccupied(int x, int y) {
+        for (Entity e : List) {
+            if (e.getX() == x && e.getY() == y) {
+                return true;
             }
-        return true;
+        }
+        return false;
     }
 
     
-    public char getSymbolAt(int x, int y) {
-        return Grid.getOrDefault(x + "," + y, '.');
+    public void addEntity(Entity entity) {
+        List.add(entity);
+        Grid.put(entity.getX() + "," + entity.getY(), getSymbolForEntity(entity));
+    }
+    
+    public char getSymbolForEntity(Entity entity) {
+        if (entity instanceof Grass) return 'G';
+        if (entity instanceof Herbivore) return 'H';
+        if (entity instanceof Predator) return 'P';
+        if (entity instanceof Rock) return 'R';
+        if (entity instanceof Tree) return 'T';
+        return '?';
+    }    
+    
+    public List<Entity> getEntities() {
+        return List;
+    }
+    
+    public List<Grass> getGrass() {
+        return List.stream()
+                   .filter(entity -> entity instanceof Grass)
+                   .map(entity -> (Grass) entity)
+                   .collect(Collectors.toList());
+    }
+
+    public List<Herbivore> getHerbivores() {
+        return List.stream()
+                   .filter(entity -> entity instanceof Herbivore)
+                   .map(entity -> (Herbivore) entity)
+                   .collect(Collectors.toList());
+    }
+
+    
+    public void removeEntity(int ID) {
+        List.removeIf(entity -> entity.getID() == ID);
+    }
+
+    public Entity getEntityAt(int x, int y) {
+        for (Entity entity : List) {
+            if (entity.getX() == x && entity.getY() == y) {
+                return entity;
+            }
+        }
+        return null;
     }
     
     public boolean isValid(int x, int y) {
         return x >= 0 && x < 10 && y >= 0 && y < 10;
-    }
-    
-    public List<Herbivore> getHerbivores() {
-        return herbivores;
-    }
-
-    public List<Predator> getPredators() {
-        return predators;
-    }
-
-    public List<Entity> getGrass() {
-        return grass;
-    }
-    
-    public void removeEntity(int x, int y) {
-        Grid.remove(x + "," + y);
-        herbivores.removeIf(h -> h.getX() == x && h.getY() == y);     
-        predators.removeIf(p -> p.getX() == x && p.getY() == y);
     }
 
 

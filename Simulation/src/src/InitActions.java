@@ -3,11 +3,11 @@ package src;
 import java.util.Random;
 
 public class InitActions implements Action {
-    private int numHerbivores = 3;
+    private int numHerbivores = 1;
     private int numPredators = 1;
-    private int numGrass = 8;
-    private int numRocks = 3;
-    private int numTrees = 3;
+    private int numGrass = 1;
+    private int numRocks = 0;
+    private int numTrees = 0;
 
     @Override
     public void execute(Map map) {
