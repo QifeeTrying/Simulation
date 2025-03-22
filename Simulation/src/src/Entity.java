@@ -1,39 +1,33 @@
 package src;
 
 public abstract class Entity {
-    protected int X, Y, HP;
-    protected final int ID;
+    protected int x, y, hp;
+    protected final int id;
 
-    public Entity(int x, int y, int ID, int HP) {
-        this.X = x;
-        this.Y = y;
-        this.ID = ID;
-        this.HP = HP;
+    public Entity(int x, int y, int id, int hp) {
+        this.x = x;
+        this.y = y;
+        this.id = id;
+        this.hp = hp;
     }
 
-    public int getX() { return X; }
-    public int getY() { return Y; }
-    public int getID() { return ID; }  
+    public int getX() { return x; }
+    public int getY() { return y; }
+    public int getID() { return id; }
+    public int getHP() { return hp; }  
     
-    public int getEntity() { return ID; }
+    public int getEntity() { return id; }
     
     public void setPosition(int x, int y) {
-        this.X = x;
-        this.Y = y;
+        this.x = x;
+        this.y = y;
     }
     
     public void checkHealth(Map map) { 
-        if (HP <= 0) map.removeEntity(this.ID);
+        if (hp <= 0) map.removeEntity(this.id);
     }
     
-    public void damage(int x, int y, Map map) {
-        Entity target = map.getEntityAt(x, y);
-        if (target != null) {
-        target.HP -= 10;
-        }
-    }
-    
-    @Override
-    public String toString() {super.toString();}
-
+	/*
+	 * @Override public String toString() {super.toString();}
+	 */
 }

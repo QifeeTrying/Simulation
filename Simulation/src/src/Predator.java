@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Predator extends Creature {
 
-    public Predator(int x, int y, int ID, int HP) {
-        super(x, y, ID, 20);
+    public Predator(int x, int y, int id, int hp) {
+        super(x, y, id, 20);
     }
 
     @Override
@@ -15,7 +15,7 @@ public class Predator extends Creature {
 
     @Override
     public String toString() {
-    	return "Predator ID " + ID + ", " + X + ", " + Y;
+    	return "Predator ID " + id + ", " + x + ", " + y;
     }
 
 }

@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Map {
 	public HashMap<String, Character> Grid;
-    private List<Entity> List;
+    public List<Entity> List;
     private static int globalID = 1;
 
     public Map(int width, int height) {
@@ -36,7 +36,7 @@ public class Map {
         return true;
     }
  
-    private boolean isOccupied(int x, int y) {
+    public boolean isOccupied(int x, int y) {
         for (Entity e : List) {
             if (e.getX() == x && e.getY() == y) {
                 return true;
@@ -95,6 +95,5 @@ public class Map {
     public boolean isValid(int x, int y) {
         return x >= 0 && x < 10 && y >= 0 && y < 10;
     }
-
 
 }
