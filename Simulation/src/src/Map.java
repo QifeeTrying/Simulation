@@ -2,6 +2,14 @@ package src;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import src.entities.Entity;
+import src.entities.Grass;
+import src.entities.Herbivore;
+import src.entities.Predator;
+import src.entities.Rock;
+import src.entities.Tree;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -9,11 +17,14 @@ import java.util.Random;
 public class Map {
 	public HashMap<String, Character> Grid;
     public List<Entity> List;
-    private static int globalID = 1;
+    {
+    	List = new ArrayList<>();
+    }
+    private static int globalID = 1;  
+    
 
     public Map(int width, int height) {
-    	this.Grid = new HashMap<>();  
-        List = new ArrayList<>();
+    	this.Grid = new HashMap<>();
     }
     
     public boolean addEntities(int count, Class<? extends Entity> type, Random rand, char Symbol) {
@@ -48,7 +59,7 @@ public class Map {
     
     public void addEntity(Entity entity) {
         List.add(entity);
-        Grid.put(entity.getX() + "," + entity.getY(), getSymbolForEntity(entity));
+//        Grid.put(entity.getX() + "," + entity.getY(), getSymbolForEntity(entity));
     }
     
     public char getSymbolForEntity(Entity entity) {

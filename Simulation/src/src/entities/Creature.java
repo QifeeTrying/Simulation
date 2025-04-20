@@ -1,6 +1,9 @@
-package src;
+package src.entities;
 
 import java.util.List;
+
+import src.Map;
+import src.Actions.TurnActions;
 
 public abstract class Creature extends Entity {
     private int targetX, targetY; // Store target coordinates
@@ -13,7 +16,6 @@ public abstract class Creature extends Entity {
     
     protected void makeMove(Map map, List<? extends Entity> possibleTargets) {
         
-    	 // Pick the first target (or choose based on AI logic)
         Entity target = possibleTargets.get(0);
         targetX = target.getX();
         targetY = target.getY();

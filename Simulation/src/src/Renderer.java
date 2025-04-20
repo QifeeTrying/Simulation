@@ -1,5 +1,7 @@
 package src;
 
+import src.entities.Entity;
+
 public class Renderer {
     public static void render(Map map) {
         for (int y = 0; y < 10; y++) {

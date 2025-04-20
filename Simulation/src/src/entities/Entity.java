@@ -1,4 +1,6 @@
-package src;
+package src.entities;
+
+import src.Map;
 
 public abstract class Entity {
     protected int x, y, hp;
@@ -27,7 +29,4 @@ public abstract class Entity {
         if (hp <= 0) map.removeEntity(this.id);
     }
     
-	/*
-	 * @Override public String toString() {super.toString();}
-	 */
 }

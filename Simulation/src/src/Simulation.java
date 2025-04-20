@@ -2,11 +2,18 @@ package src;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import src.Actions.Action;
+import src.Actions.InitActions;
+import src.entities.Creature;
+import src.entities.Entity;
+
 import java.util.List;
 
 public class Simulation {
-    private static Map map = new Map(10, 10);
-    private int turnCounter = 0;
+    private Map map = new Map(10, 10);
+//	private static Map map;
+	private int turnCounter = 0;
     Scanner scanner = new Scanner(System.in);
     
     public List<Action> initActions = new ArrayList<>();
@@ -32,9 +39,8 @@ public class Simulation {
             for (Entity entity : map.getEntities()) {
                 if (entity instanceof Creature) {
                     ((Creature) entity).makeMove(map);
-
- //                   System.out.println("Made move");
                 }
+                entity.checkHealth(map);
             }
             
             nextTurn();

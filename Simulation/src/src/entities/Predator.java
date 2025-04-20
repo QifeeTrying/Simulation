@@ -1,6 +1,8 @@
-package src;
+package src.entities;
 
 import java.util.List;
+
+import src.Map;
 
 public class Predator extends Creature {
 

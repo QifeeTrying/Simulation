@@ -1,6 +1,13 @@
-package src;
+package src.Actions;
 
 import java.util.Random;
+
+import src.Map;
+import src.entities.Grass;
+import src.entities.Herbivore;
+import src.entities.Predator;
+import src.entities.Rock;
+import src.entities.Tree;
 
 public class InitActions implements Action {
     private int numHerbivores = 1;

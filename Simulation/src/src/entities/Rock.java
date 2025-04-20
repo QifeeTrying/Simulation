@@ -1,4 +1,4 @@
-package src;
+package src.entities;
 
 public class Rock extends Entity {
     public Rock(int x, int y, int id, int hp) {
