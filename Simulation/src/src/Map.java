@@ -15,17 +15,17 @@ import java.util.List;
 import java.util.Random;
 
 public class Map {
-	public HashMap<String, Character> Grid;
-    public List<Entity> List;
+//	public HashMap<String, Character> Grid;
+    public List<Entity> list;
     {
-    	List = new ArrayList<>();
+    	list = new ArrayList<>();
     }
     private static int globalID = 1;  
     
 
-    public Map(int width, int height) {
-    	this.Grid = new HashMap<>();
-    }
+	/*
+	 * public Map(int width, int height) { this.Grid = new HashMap<>(); }
+	 */
     
     public boolean addEntities(int count, Class<? extends Entity> type, Random rand, char Symbol) {
         for (int i = 0; i < count; i++) {
@@ -38,7 +38,10 @@ public class Map {
 
             try {
             	Entity entity = type.getDeclaredConstructor(int.class, int.class, int.class, int.class).newInstance(x, y, globalID++, 20);
-            	List.add(entity);
+            	list.add(entity);
+
+                System.out.print(x);
+                System.out.print(y);
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
@@ -48,7 +51,7 @@ public class Map {
     }
  
     public boolean isOccupied(int x, int y) {
-        for (Entity e : List) {
+        for (Entity e : list) {
             if (e.getX() == x && e.getY() == y) {
                 return true;
             }
@@ -58,8 +61,7 @@ public class Map {
 
     
     public void addEntity(Entity entity) {
-        List.add(entity);
-//        Grid.put(entity.getX() + "," + entity.getY(), getSymbolForEntity(entity));
+        list.add(entity);
     }
     
     public char getSymbolForEntity(Entity entity) {
@@ -72,18 +74,18 @@ public class Map {
     }    
     
     public List<Entity> getEntities() {
-        return List;
+        return list;
     }
     
     public List<Grass> getGrass() {
-        return List.stream()
+        return list.stream()
                    .filter(entity -> entity instanceof Grass)
                    .map(entity -> (Grass) entity)
                    .collect(Collectors.toList());
     }
 
     public List<Herbivore> getHerbivores() {
-        return List.stream()
+        return list.stream()
                    .filter(entity -> entity instanceof Herbivore)
                    .map(entity -> (Herbivore) entity)
                    .collect(Collectors.toList());
@@ -91,11 +93,11 @@ public class Map {
 
     
     public void removeEntity(int ID) {
-        List.removeIf(entity -> entity.getID() == ID);
+        list.removeIf(entity -> entity.getID() == ID);
     }
 
     public Entity getEntityAt(int x, int y) {
-        for (Entity entity : List) {
+        for (Entity entity : list) {
             if (entity.getX() == x && entity.getY() == y) {
                 return entity;
             }

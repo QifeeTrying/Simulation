@@ -11,8 +11,7 @@ import src.entities.Entity;
 import java.util.List;
 
 public class Simulation {
-    private Map map = new Map(10, 10);
-//	private static Map map;
+    private Map map = new Map();
 	private int turnCounter = 0;
     Scanner scanner = new Scanner(System.in);
     
@@ -23,31 +22,47 @@ public class Simulation {
         initActions.add(new InitActions());
     }
 
-    public void nextTurn() {
+    private void nextTurn() {
         turnCounter++;
         System.out.println("Turn: " + turnCounter);
-        
+        entityCheckHealth();
+        creatureInfo();
+        creatureMove();
         Renderer.render(map);
+        System.out.println("Press Enter to continue...");
+        scanner.nextLine(); 
     }
 
+    private void creatureMove() {
+    	for (Entity entity : map.getEntities()) {
+            if (entity instanceof Creature) {
+                ((Creature) entity).makeMove(map);
+            }
+        }
+    }
+    
+    private void entityCheckHealth() {
+    	for (Entity entity : map.getEntities()) {
+            entity.checkHealth(map);
+            }
+        }
+    
+    private void creatureInfo() {
+    	for (Entity entity : map.getEntities()) {
+    		if (entity instanceof Creature) {
+		System.out.println("Creature: " + ((Creature) entity).toString());
+    		}
+    	}
+    }
+    
     public void startSimulation() {
         for (Action action : initActions) {
             action.execute(map);
         }
-        
-        while (true) {
-            for (Entity entity : map.getEntities()) {
-                if (entity instanceof Creature) {
-                    ((Creature) entity).makeMove(map);
-                }
-                entity.checkHealth(map);
-            }
-            
+        Renderer.render(map);
+        while (true)
             nextTurn();
-            System.out.println("Press Enter to continue...");
-            scanner.nextLine(); 
         }
-    }
 
     public static void main(String[] args) {
         Simulation sim = new Simulation();

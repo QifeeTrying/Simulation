@@ -15,7 +15,9 @@ public class Renderer {
                     }
                 }
 
+                System.out.print(" ");
                 System.out.print(symbol);
+                System.out.print(" ");
             }
             System.out.println();
         }

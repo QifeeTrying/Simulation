@@ -24,105 +24,91 @@ public class TurnActions {
         int curX = startX;
         int curY = startY;
         int direction = 0;
-        int[] priorities = new int[8]; 
+        int lowest = 0;
+        ArrayList<Integer> priorities = new ArrayList<>(Collections.nCopies(8, 0));
 
         if (startX > targetX) {
-        	priorities[0] += 1;
-        	priorities[3] += 1;
-        	priorities[5] += 1;
+        	priorities.set(0, priorities.get(0) + 1);
+        	priorities.set(3, priorities.get(3) + 1);
+        	priorities.set(5, priorities.get(5) + 1);
         }
         if (startX < targetX) {
-        	priorities[2] += 1;
-        	priorities[4] += 1;
-        	priorities[7] += 1;
+        	priorities.set(2, priorities.get(2) + 1);
+        	priorities.set(4, priorities.get(4) + 1);
+        	priorities.set(7, priorities.get(7) + 1);
         }
         else
         {
         	if (startY < targetY) {
-        	priorities[1] += 1;
+        	priorities.set(1, priorities.get(1) + 1);
         	}
         	if (startY > targetY) {
-        	priorities[6] += 1;
+        	priorities.set(6, priorities.get(6) + 1);
         	}
         }
         
         if (startY > targetY) {
-        	priorities[5] += 1;
-        	priorities[6] += 1;
-        	priorities[7] += 1;
+        	priorities.set(5, priorities.get(5) + 1);
+        	priorities.set(6, priorities.get(6) + 1);
+        	priorities.set(7, priorities.get(7) + 1);
         }
         if (startY < targetY) {
-        	priorities[0] += 1;
-        	priorities[1] += 1;
-        	priorities[2] += 1;
+        	priorities.set(0, priorities.get(0) + 1);
+        	priorities.set(1, priorities.get(1) + 1);
+        	priorities.set(2, priorities.get(2) + 1);
         }
         else
         {
         	if (startX > targetX) {
-        	priorities[3] += 1;
+        	priorities.set(3, priorities.get(3) + 1);
         	}
         	if (startX < targetX) {
-        	priorities[4] += 1;
+        	priorities.set(4, priorities.get(4) + 1);
         	}
         }
         
-  
+        if (!isWalkable(startX - 1, startY + 1, map)) {
+            	priorities.set(0, 0);
+        	}
+        if (!isWalkable(startX, startY + 1, map)) {
+            	priorities.set(1, 0);
+       		}
+        if (!isWalkable(startX + 1, startY + 1, map)) {
+            	priorities.set(2, 0);
+       		}
+        if (!isWalkable(startX - 1, startY, map)) {
+            	priorities.set(3, 0);
+       		}
+        if (!isWalkable(startX - 1, startY - 1, map)) {
+            	priorities.set(4, 0);
+       		}
+        if (!isWalkable(startX + 1, startY, map)) {
+            	priorities.set(5, 0);
+       		}
+        if (!isWalkable(startX + 1, startY - 1, map)) {
+            	priorities.set(6, 0);
+       		}
+        if (!isWalkable(startX, startY - 1, map)) {
+            	priorities.set(7, 0);
+        }
+        
         for (int i = 0; i < 8; i++) {
-            if (priorities[i] > direction) {
-                direction = priorities[i] + 1;
+            if (priorities.get(i) > lowest) {
+                direction = i;
+                lowest = priorities.get(i);
             }
-            if (i == 0) {
-            	if (isWalkable(startX - 1, startY + 1, map) == false) {
-            		direction = 0;
-            	}
-            }
-           	if (i == 1) {
-           		if (isWalkable(startX, startY + 1, map) == false) {
-           			direction = 0;
-           		}
-           	}
-           	if (i == 2) {
-           		if (isWalkable(startX + 1, startY + 1, map) == false) {
-           			direction = 0;
-           		}
-           	}
-           	if (i == 3) {
-           		if (isWalkable(startX - 1, startY, map) == false) {
-           			direction = 0;
-           		}
-           	}
-           	if (i == 4) {
-           		if (isWalkable(startX - 1, startY - 1, map) == false) {
-           			direction = 0;
-           		}
-           	}
-           	if (i == 5) {
-           		if (isWalkable(startX + 1, startY, map) == false) {
-           			direction = 0;
-           		}
-           	}
-           	if (i == 6) {
-           		if (isWalkable(startX + 1, startY - 1, map) == false) {
-           			direction = 0;
-           		}
-           	}
-           	if (i == 7) {
-           		if (isWalkable(startX, startY - 1, map) == false) {
-           			direction = 0;
-           		}
-           	}
         }
         
         switch (direction) {
-        case 0: System.out.println("0"); break; // nowhere
-        case 1: curX--; curY++; System.out.println("1"); break; // top-left
-        case 2: curY++; System.out.println("2"); break;          // top
-        case 3: curX++; curY++; System.out.println("3"); break; // top-right
-        case 4: curX--; System.out.println("4"); break;          // left
-        case 5: curX++; System.out.println("5"); break;          // right
-        case 6: curX--; curY--; System.out.println("6"); break; // bottom-left
-        case 7: curY--; System.out.println("7"); break;          // bottom
-        case 8: curX++; curY--; System.out.println("8"); break; // bottom-right
+        case 0: curX--; curY++; System.out.println("0"); break; // top-left
+        case 1: curY++; System.out.println("1"); break;          // top
+        case 2: curX++; curY++; System.out.println("2"); break; // top-right
+        case 3: curX--; System.out.println("3"); break;          // left
+        case 4: curX++; System.out.println("4"); break;          // right
+        case 5: curX--; curY--; System.out.println("5"); break; // bottom-left
+        case 6: curY--; System.out.println("6"); break;          // bottom
+        case 7: curX++; curY--; System.out.println("7"); break; // bottom-right
+        default: System.out.println("default"); break; //nowhere
     }
         
 		List<int[]> path = new ArrayList<>();
@@ -148,8 +134,6 @@ public class TurnActions {
 	
 	public static boolean moveCreature(Creature creature, List<? extends Entity> possibleTargets, Map map) {
 		Entity nearestTarget = findNearestTarget(creature, possibleTargets);
-		System.out.println("Creature: " + creature.toString());
-		System.out.println("Targets: " + possibleTargets.get(0).toString());
 //		System.out.println("TargetCoords: " + targetCoords[0] + ", " + targetCoords[1]);
 
 		if (nearestTarget == null) {
@@ -173,22 +157,22 @@ public class TurnActions {
 
 	public static boolean canAttackEntity(Entity source, Entity target, Map map) {
 		int startX = source.getX();
-        int startY = source.getY();
-        int targetX = target.getX();
-        int targetY = target.getY();
+		int startY = source.getY();
+		int targetX = target.getX();
+		int targetY = target.getY();
 		if (targetX == startX++ && targetY == startY){
-		return true;
-	}
+			return true;
+		}
 		if (targetX == startX && targetY == startY++){
-		return true;
-	}
-	if (targetX == startX-- && targetY == startY){
-		return true;
-	}
-	if (targetX == startX && targetY == startY--){
-		return true;
-	}
-	return false;
+			return true;
+		}
+		if (targetX == startX-- && targetY == startY){
+			return true;
+		}
+		if (targetX == startX && targetY == startY--){
+			return true;
+		}
+		return false;
 	}
 
 	public static Entity findNearestTarget(Creature creature, List<? extends Entity> targets) {

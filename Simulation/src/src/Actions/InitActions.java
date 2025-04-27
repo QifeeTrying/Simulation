@@ -11,7 +11,7 @@ import src.entities.Tree;
 
 public class InitActions implements Action {
     private int numHerbivores = 1;
-    private int numPredators = 1;
+    private int numPredators = 0;
     private int numGrass = 1;
     private int numRocks = 0;
     private int numTrees = 0;

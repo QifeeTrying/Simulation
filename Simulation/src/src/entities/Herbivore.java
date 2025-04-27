@@ -1,7 +1,5 @@
 package src.entities;
 
-import java.util.List;
-
 import src.Map;
 
 public class Herbivore extends Creature {
