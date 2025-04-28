@@ -21,25 +21,25 @@ public abstract class Creature extends Entity {
 		targetX = target.getX();
 		targetY = target.getY();
 
-		System.out.println("Targets: " + possibleTargets.get(0).toString());
+//		System.out.println("Targets: " + possibleTargets.get(0).toString());
 
 		boolean canAttack = TurnActions.moveCreature(this, possibleTargets, map);
 
 		if (canAttack) {
 			this.damage(targetX, targetY, map);
-			System.out.print("Can attack!");
+//			System.out.print("Can attack!");
 		}
 	}
 
 	public void damage(int x, int y, Map map) {
 		Entity target = map.getEntityAt(x, y);
-		System.out.print("Got Entity at: ");
-		System.out.print(x);
-		System.out.print(y);
+//		System.out.print("Got Entity at: ");
+//		System.out.print(x);
+//		System.out.print(y);
 		if (target != null) {
 			target.hp -= 10;
-			System.out.print(" HP = ");
-			System.out.print(target.hp);
+//			System.out.print(" HP = ");
+//			System.out.print(target.hp);
 		}
 	}
 

@@ -1,7 +1,7 @@
 package src.entities;
 
 public class Rock extends Entity {
-    public Rock(int x, int y, int id, int hp) {
-        super(x, y, id, 1);
-    }
+	public Rock(int x, int y, int id, int hp) {
+		super(x, y, id, 1);
+	}
 }
